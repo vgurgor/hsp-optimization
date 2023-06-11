@@ -25,66 +25,66 @@ class OptimizationWizard:
             print("------------------------------------------------------------------------------------------------------------------------")
             print("-- KOD --                                       İŞLEM                                                                 --")
             print("------------------------------------------------------------------------------------------------------------------------")
-            print("--  1  --  HST Uygulamasından alınan txt ile optimizasyon yap                                                         --")
+            print("--  1  --  HST Uygulamasından alınan json ile optimizasyon yap                                                        --")
             print("------------------------------------------------------------------------------------------------------------------------")
 
         if(mission==''):
             mission = input('Yapılacak işlem kodunu girin: ')
 
         if(mission=='1'): 
-            params = self.getDataFromTxt('')
+            params = self.getDataFromJson('')
             school = SchoolScheduling(params['days'], params['periods'], params['courses'], params['teachers'], params['classrooms'])
             school.optimize()
 
             # Sonuçları yazdırma
             school.print_results()
 
-    def getDataFromTxt (self, txtFile=''):
-        if(txtFile==''):
-            txt = self.chooseTxt()
-            with open("{}".format(txt)) as f:
+    def getDataFromJson (self, jsonFile=''):
+        if(jsonFile==''):
+            json = self.chooseJson()
+            with open("{}".format(json)) as f:
                 content = f.readlines()
             content = [x.strip() for x in content]
             if(len(content)==0):
-                print("txt dosyasi bos")
-                self.getDataFromTxt('')
+                print("json dosyasi bos")
+                self.getDataFromJson('')
             else:
                 global_degerler = {}
                 exec(content, global_degerler)
 
                 return global_degerler
         else:
-            with open("{}".format(txtFile)) as f:
+            with open("{}".format(jsonFile)) as f:
                 content = f.readlines()
             content = [x.strip() for x in content]
             if(len(content)==0):
-                print("txt dosyasi bos")
-                self.getDataFromTxt('')
+                print("json dosyasi bos")
+                self.getDataFromJson('')
             else:
                 global_degerler = {}
                 exec(content, global_degerler)
 
                 return global_degerler
                
-    def chooseTxt(self, isReturn=False):
+    def chooseJson(self, isReturn=False):
         if(isReturn == False):
             folder = "input/"
             allFiles = os.listdir("{}".format(folder))
-            txtFiles = filter(lambda x: x[-4:] == '.txt', allFiles)
-            txtArray = []
-            print("TXT DOSYALARI")
+            jsonFiles = filter(lambda x: x[-4:] == '.json', allFiles)
+            jsonArray = []
+            print("JSON DOSYALARI")
             s=0
-            for i in txtFiles:
-                txtArray.append("{}{}".format(folder,i))
+            for i in jsonFiles:
+                jsonArray.append("{}{}".format(folder,i))
                 print("{} | {}".format(s,i))
                 s = s+1
 
-        txtCode = input('TXT kodu girin: ')
+        jsonCode = input('JSON kodu girin: ')
 
         try:
-            return txtArray[int(txtCode)]
+            return jsonArray[int(jsonCode)]
         except:
-            print("Hatali txt kodu")
-            self.chooseTxt(True)
+            print("Hatali json kodu")
+            self.chooseJson(True)
 
 OptimizationWizard();
