@@ -9,7 +9,7 @@ class SchoolScheduling:
         self.classrooms = classrooms
         self.m = Model("school_scheduling")
 
-    def optimize(self):
+    def optimization(self):
         # Add variables
         x = self.m.addVars(self.days, self.periods, range(len(self.courses)), range(len(self.teachers)), range(len(self.classrooms)), vtype=GRB.BINARY, name="x")
 

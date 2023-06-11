@@ -35,8 +35,9 @@ class OptimizationWizard:
         if(mission=='1'): 
             params = self.getDataFromJson('')
             
-            school = SchoolScheduling(params['days'], params['periods'], params['courses'], params['teachers'], params['classrooms']).optimize()
-          
+            school = SchoolScheduling(params['days'], params['periods'], params['courses'], params['teachers'], params['classrooms'])
+            school.optimization()
+            school.print_results()
             
 
     def getDataFromJson (self, jsonFile=''):
