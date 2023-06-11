@@ -1,6 +1,7 @@
 import os
 import sys
-import SchoolScheduling
+import json
+from SchoolScheduling import SchoolScheduling
 
 class OptimizationWizard:
     def __init__(self):
@@ -33,44 +34,23 @@ class OptimizationWizard:
 
         if(mission=='1'): 
             params = self.getDataFromJson('')
-            school = SchoolScheduling(params['days'], params['periods'], params['courses'], params['teachers'], params['classrooms'])
-            school.optimize()
-
-            # Sonuçları yazdırma
-            school.print_results()
+            
+            school = SchoolScheduling(params['days'], params['periods'], params['courses'], params['teachers'], params['classrooms']).optimize()
+          
+            
 
     def getDataFromJson (self, jsonFile=''):
         if(jsonFile==''):
-            json = self.chooseJson()
-            with open("{}".format(json)) as f:
-                content = f.readlines()
-            content = [x.strip() for x in content]
-            if(len(content)==0):
-                print("json dosyasi bos")
-                self.getDataFromJson('')
-            else:
-                global_degerler = {}
-                exec(content, global_degerler)
-
-                return global_degerler
-        else:
-            with open("{}".format(jsonFile)) as f:
-                content = f.readlines()
-            content = [x.strip() for x in content]
-            if(len(content)==0):
-                print("json dosyasi bos")
-                self.getDataFromJson('')
-            else:
-                global_degerler = {}
-                exec(content, global_degerler)
-
-                return global_degerler
+            jsonfile = self.chooseJson()
+            with open(jsonfile) as f:
+                content = json.load(f)
+            return content
                
     def chooseJson(self, isReturn=False):
         if(isReturn == False):
             folder = "input/"
             allFiles = os.listdir("{}".format(folder))
-            jsonFiles = filter(lambda x: x[-4:] == '.json', allFiles)
+            jsonFiles = filter(lambda x: x[-5:] == '.json', allFiles)
             jsonArray = []
             print("JSON DOSYALARI")
             s=0
