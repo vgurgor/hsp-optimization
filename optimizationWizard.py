@@ -87,4 +87,4 @@ class OptimizationWizard:
             print("Hatali json kodu")
             self.chooseJson(True)
 
-OptimizationWizard();
+OptimizationWizard()
