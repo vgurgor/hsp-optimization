@@ -38,6 +38,7 @@ class OptimizationWizard:
             school = SchoolScheduling(params['days'], params['periods'], params['courses'], params['teachers'], params['classrooms'])
             school.optimization()
             school.print_results()
+            school.save_results()
             self.getMission()
             
 
